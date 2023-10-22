@@ -16,3 +16,23 @@ app.listen(8080, () => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
+app.post('/create', (req, res) => {
+
+    // handle create
+    console.log("create heard on server");
+
+});
+
+app.post('/read', (req, res) => {
+
+    // handle read
+
+});
+
+app.post('/delete', (req, res) => {
+
+    // handle delete
+
+});
