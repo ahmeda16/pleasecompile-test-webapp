@@ -25,6 +25,7 @@ buttonCreate.addEventListener('click', function(e) {
         if (response.ok) {
             
             console.log("'create' was recorded");
+            output.value = `'${username.value}' was created!`
             updateDB()
             return;
 
@@ -55,12 +56,12 @@ buttonRead.addEventListener('click', function(e) {
             if (response.status == 200) {
                 // found
                 // console.log("found in database!");
-                output.value = `'${username.value}' was found!`
+                output.value = `'${username.value}' was found!`;
             }
             else if (response.status == 204) {
                 // not found
                 // console.log("not found in database");
-                output.value = `'${username.value}' was NOT found.`
+                output.value = `'${username.value}' was NOT found.`;
             }
 
             updateDB()
@@ -90,6 +91,7 @@ buttonDelete.addEventListener('click', function(e) {
         if (response.ok) {
             
             console.log("'delete' was recorded");
+            output.value = `'${username.value}' was deleted.`
             updateDB()
             return;
 
@@ -123,4 +125,10 @@ function updateDB() {
     .catch(function(error) {
         console.log(error);
     })
+}
+
+
+
+window.onload = function() {
+  updateDB();
 }

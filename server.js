@@ -48,7 +48,7 @@ app.listen(8080, () => {
   app.route('/username')
       .post((req, res) => {
           // handle create
-          console.dir(`Creating: ${req.body.username} on server`);
+          console.log(`Creating: ${req.body.username} on server`);
           // create user on db
           db.usernames.push({"name" : req.body.username});
           fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
@@ -63,7 +63,7 @@ app.listen(8080, () => {
       })
       .get((req, res) => {
           // handle read
-          console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
+          console.log(`Reading: ${JSON.stringify(req.query.search)} on server`);
           
           // check if user exists on db
           var found = false;
@@ -85,7 +85,7 @@ app.listen(8080, () => {
       })
       .delete((req, res) => {
           // handle delete
-          console.dir(`Deleting: ${req.body.username} on server`);
+          console.log(`Deleting: ${req.body.username} on server`);
           // delete user on db
           
           res.sendStatus(200);    // OK
