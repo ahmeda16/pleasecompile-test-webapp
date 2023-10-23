@@ -92,9 +92,16 @@ app.listen(8080, () => {
             if (db.usernames[i].name == req.body.username)
             {
               db.usernames.splice(i, 1);
+              //return; <-- to not delete all instances of name, fix soon!
             }
           }
-          console.log("Delete user to database success");
+          fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
+            if (error) {
+              console.log(error);
+              return;
+            }
+            console.log("Delete user to database success");
+          });
           res.sendStatus(200);    // OK
       })
 
