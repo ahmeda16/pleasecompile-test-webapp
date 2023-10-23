@@ -1,8 +1,21 @@
 console.log('Server-side code running');
 
 const express = require('express');
-
 const app = express();
+const fs = require('fs');
+
+var db;
+
+// initialize db variable
+fs.readFile("./db.json", "utf8", (error, data) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
+  db = JSON.parse(data);
+  console.log(db);
+});
+
 
 // serve files from the public directory
 app.use(express.static('public'));
