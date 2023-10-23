@@ -2,7 +2,7 @@ console.log('Server-side code running');
 
 const express = require('express');
 const fs = require('fs');
-const bodyParser = require(body-parser);
+const bodyParser = require('body-parser');
 const app = express();
 
 var db;
@@ -63,6 +63,6 @@ app.listen(8080, () => {
           // handle delete
           console.dir(`Deleting: ${req.body.username} on server`);
           // delete user on db
-          
+
           res.sendStatus(200);    // OK
       })
