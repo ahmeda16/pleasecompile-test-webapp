@@ -6,7 +6,7 @@ console.log('Client-side code running');
 // create read update delete (CRUD)
 
 const username = document.getElementById('username');
-
+const output = document.getElementById('output');
 
 const buttonCreate = document.getElementById('buttonCreate');
 buttonCreate.addEventListener('click', function(e) {
@@ -25,6 +25,7 @@ buttonCreate.addEventListener('click', function(e) {
         if (response.ok) {
             
             console.log("'create' was recorded");
+            output.value = `'${username.value}' was created!`
             updateDB()
             return;
 
@@ -50,8 +51,19 @@ buttonRead.addEventListener('click', function(e) {
     fetch(`/username?search=${username.value}`, requestOptions)
     .then(function(response) {
         if (response.ok) {
-
             console.log("'read' was recorded");
+
+            if (response.status == 200) {
+                // found
+                // console.log("found in database!");
+                output.value = `'${username.value}' was found!`;
+            }
+            else if (response.status == 204) {
+                // not found
+                // console.log("not found in database");
+                output.value = `'${username.value}' was NOT found.`;
+            }
+
             updateDB()
             return;
 
@@ -79,6 +91,7 @@ buttonDelete.addEventListener('click', function(e) {
         if (response.ok) {
             
             console.log("'delete' was recorded");
+            output.value = `'${username.value}' was deleted.`
             updateDB()
             return;
 
@@ -112,4 +125,10 @@ function updateDB() {
     .catch(function(error) {
         console.log(error);
     })
+}
+
+
+
+window.onload = function() {
+  updateDB();
 }

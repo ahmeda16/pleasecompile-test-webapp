@@ -5,15 +5,28 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
 
-var db;
-
 // initialize db variable
-fs.readFile("./db.json", "utf8", (error, data) => {
+const db = {
+  "usernames": [
+    {
+      "name": "Joe Biden"
+    },
+    {
+      "name": "Donald Trump"
+    },
+    {
+      "name": "Barack Obama"
+    }
+  ]
+};
+
+//initialize db json file
+fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
   if (error) {
     console.log(error);
     return;
   }
-  db = JSON.parse(data);
+  console.log("Database initialization success");
   console.log(db);
 });
 
@@ -35,7 +48,7 @@ app.listen(8080, () => {
   app.route('/username')
       .post((req, res) => {
           // handle create
-          console.dir(`Creating: ${req.body.username} on server`);
+          console.log(`Creating: ${req.body.username} on server`);
           // create user on db
           db.usernames.push({"name" : req.body.username});
           fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
@@ -45,22 +58,34 @@ app.listen(8080, () => {
             }
             console.log("Add user to database success");
           });
-
+          
           res.sendStatus(201);    // created
       })
       .get((req, res) => {
           // handle read
-          console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
+          console.log(`Reading: ${JSON.stringify(req.query.search)} on server`);
+          
           // check if user exists on db
+          var found = false;
+          for (var user of db.usernames) {
+            if (String(user.name) === String(req.query.search)) {
+              found = true;
+            }
+          }
 
-          res.sendStatus(200);    // OK
+          if (found) {
+            res.sendStatus(200);    // OK, found
+          }
+          else {
+            res.sendStatus(204);    // OK but not found
+          }
       }) 
       .put((req, res) => {
   
       })
       .delete((req, res) => {
           // handle delete
-          console.dir(`Deleting: ${req.body.username} on server`);
+          console.log(`Deleting: ${req.body.username} on server`);
           // delete user on db
           db.usernames.delete({"name" : req.body.username});
 
