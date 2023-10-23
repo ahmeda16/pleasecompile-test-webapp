@@ -58,15 +58,27 @@ app.listen(8080, () => {
             }
             console.log("Add user to database success");
           });
-
+          
           res.sendStatus(201);    // created
       })
       .get((req, res) => {
           // handle read
           console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
+          
           // check if user exists on db
+          var found = false;
+          for (var user of db.usernames) {
+            if (String(user.name) === String(req.query.search)) {
+              found = true;
+            }
+          }
 
-          res.sendStatus(200);    // OK
+          if (found) {
+            res.sendStatus(200);    // OK, found
+          }
+          else {
+            res.sendStatus(204);    // OK but not found
+          }
       }) 
       .put((req, res) => {
   
