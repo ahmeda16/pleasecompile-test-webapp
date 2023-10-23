@@ -37,7 +37,15 @@ app.listen(8080, () => {
           // handle create
           console.dir(`Creating: ${req.body.username} on server`);
           // create user on db
-  
+          db.usernames.push(req.body.username);
+          fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
+            if (error) {
+              console.log(error);
+              return;
+            }
+            console.log("Add user to database success");
+          });
+
           res.sendStatus(201);    // created
       })
       .get((req, res) => {
@@ -61,3 +69,7 @@ app.listen(8080, () => {
 
           res.sendStatus(200);    // OK
       })
+
+app.get('/get-db', (req, res) => {
+    res.send("(insert entire database here)");
+});
