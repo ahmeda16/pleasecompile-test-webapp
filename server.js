@@ -37,7 +37,7 @@ app.listen(8080, () => {
           // handle create
           console.dir(`Creating: ${req.body.username} on server`);
           // create user on db
-          db.usernames.push(req.body.username);
+          db.usernames.push({"name" : req.body.username});
           fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
             if (error) {
               console.log(error);
@@ -50,10 +50,9 @@ app.listen(8080, () => {
       })
       .get((req, res) => {
           // handle read
-          console.dir(`Reading: ${JSON.stringify(req.params)} on server`);
+          console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
           // check if user exists on db
-          // GET cant handle http body??
-  
+
           res.sendStatus(200);    // OK
       }) 
       .put((req, res) => {
