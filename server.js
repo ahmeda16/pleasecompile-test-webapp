@@ -50,10 +50,9 @@ app.listen(8080, () => {
       })
       .get((req, res) => {
           // handle read
-          console.dir(`Reading: ${JSON.stringify(req.params)} on server`);
+          console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
           // check if user exists on db
-          // GET cant handle http body??
-  
+
           res.sendStatus(200);    // OK
       }) 
       .put((req, res) => {

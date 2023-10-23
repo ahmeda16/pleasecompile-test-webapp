@@ -44,10 +44,10 @@ buttonRead.addEventListener('click', function(e) {
 
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        // headers: { 'Content-Type': 'application/json' },
         
     }
-    fetch('/username', requestOptions)
+    fetch(`/username?search=${username.value}`, requestOptions)
     .then(function(response) {
         if (response.ok) {
 
