@@ -63,13 +63,10 @@ app.listen(8080, () => {
           // handle delete
           console.dir(`Deleting: ${req.body.username} on server`);
           // delete user on db
-
-          var key = req.body.username;
-          delete db[key];
-
+          
           res.sendStatus(200);    // OK
       })
 
-app.get('/get-db', (req, res) => {
-    res.send("(insert entire database here)");
-});
+      app.get('/get-db', (req, res) => {
+        res.send(JSON.stringify(db,null,2));
+    });
