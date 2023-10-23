@@ -66,3 +66,7 @@ app.listen(8080, () => {
 
           res.sendStatus(200);    // OK
       })
+
+app.get('/get-db', (req, res) => {
+    res.send("(insert entire database here)");
+});

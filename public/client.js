@@ -23,8 +23,11 @@ buttonCreate.addEventListener('click', function(e) {
     fetch('/username', requestOptions)
     .then(function(response) {
         if (response.ok) {
+            
             console.log("'create' was recorded");
+            updateDB()
             return;
+
         }
         throw new Error('Create request failed');
     })
@@ -42,14 +45,16 @@ buttonRead.addEventListener('click', function(e) {
     const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        //body: JSON.stringify({username: username.value}),
-        URLSearchParams: {"search": "bozo"}
+        
     }
     fetch('/username', requestOptions)
     .then(function(response) {
         if (response.ok) {
+
             console.log("'read' was recorded");
+            updateDB()
             return;
+
         }
         throw new Error('Read request failed');
     })
@@ -72,8 +77,11 @@ buttonDelete.addEventListener('click', function(e) {
     fetch('/username', requestOptions)
     .then(function(response) {
         if (response.ok) {
+            
             console.log("'delete' was recorded");
+            updateDB()
             return;
+
         }
         throw new Error('Delete request failed');
     })
@@ -82,3 +90,26 @@ buttonDelete.addEventListener('click', function(e) {
     });
 
 });
+
+
+function updateDB() {
+    /*
+        Updates display database on client side
+        Requests full db from server
+    */
+    const dbOutput = document.getElementById('db-output');
+    
+    fetch('/get-db', {method: 'GET'})
+    .then((response) => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new error('DB request failed');
+    })
+    .then((text) => {
+        dbOutput.value = text;
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
