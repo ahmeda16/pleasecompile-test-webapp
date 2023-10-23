@@ -5,15 +5,28 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const app = express();
 
-var db;
-
 // initialize db variable
-fs.readFile("./db.json", "utf8", (error, data) => {
+const db = {
+  "usernames": [
+    {
+      "name": "Joe Biden"
+    },
+    {
+      "name": "Donald Trump"
+    },
+    {
+      "name": "Barack Obama"
+    }
+  ]
+};
+
+//initialize db json file
+fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
   if (error) {
     console.log(error);
     return;
   }
-  db = JSON.parse(data);
+  console.log("Database initialization success");
   console.log(db);
 });
 
