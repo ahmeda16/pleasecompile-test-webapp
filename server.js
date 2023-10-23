@@ -62,6 +62,9 @@ app.listen(8080, () => {
           // handle delete
           console.dir(`Deleting: ${req.body.username} on server`);
           // delete user on db
+          db.usernames.delete({"name" : req.body.username});
+
+
           
           res.sendStatus(200);    // OK
       })
