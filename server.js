@@ -63,7 +63,7 @@ app.listen(8080, () => {
       })
       .get((req, res) => {
           // handle read
-          console.log(`Reading: ${JSON.stringify(req.query.search)} on server`);
+          console.dir(`Reading: ${JSON.stringify(req.query.search)} on server`);
           
           // check if user exists on db
           var found = false;
@@ -87,10 +87,14 @@ app.listen(8080, () => {
           // handle delete
           console.log(`Deleting: ${req.body.username} on server`);
           // delete user on db
-          db.usernames.delete({"name" : req.body.username});
-
-
-          
+          for (var i = db.usernames.length  - 1; i>= 0; --i)
+          {
+            if (db.usernames[i].name == req.body.username)
+            {
+              db.usernames.splice(i, 1);
+            }
+          }
+          console.log("Delete user to database success");
           res.sendStatus(200);    // OK
       })
 
