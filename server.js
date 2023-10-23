@@ -56,5 +56,8 @@ app.listen(8080, () => {
           console.dir(`Deleting: ${req.body.username} on server`);
           // delete user on db
 
+          var key = req.body.username;
+          delete db[key];
+
           res.sendStatus(200);    // OK
       })
