@@ -23,13 +23,27 @@ buttonCreate.addEventListener('click', function(e) {
     fetch('/username', requestOptions)
     .then(function(response) {
         if (response.ok) {
-            
             console.log("'create' was recorded");
-            output.value = `'${username.value}' was created!`
-            updateDB()
-            return;
+            if(response.status == 201)
+            {
+                output.value = `'${username.value}' was created!`
+                updateDB()
+                return;
+            }
+            else if(response.status == 204)
+            {
+                output.value = `'${username.value}' already exists. Nothing was added.`
+                return;
+            }
+            else
+            {
+                output.value = `'ERROR: ${response.status}'`
+                return;
+            }
+            
 
         }
+        
         throw new Error('Create request failed');
     })
     .catch(function(error) {

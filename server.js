@@ -60,14 +60,14 @@ app.listen(8080, () => {
                 return;
               }
               console.log("Add user to database success");
+              res.sendStatus(201);    // created
             });
           }
           else {
             // don't create the username
             console.log("Username already exists, No changes made");
+            res.sendStatus(204);
           }
-          
-          res.sendStatus(201);    // created
       })
       .get((req, res) => {
           // handle read
