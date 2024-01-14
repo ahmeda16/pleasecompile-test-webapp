@@ -49,15 +49,23 @@ app.listen(8080, () => {
       .post((req, res) => {
           // handle create
           console.log(`Creating: ${req.body.username} on server`);
-          // create user on db
-          db.usernames.push({"name" : req.body.username});
-          fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
-            if (error) {
-              console.log(error);
-              return;
-            }
-            console.log("Add user to database success");
-          });
+          // check if username exists
+          if(!db.usernames.some(username => username.name === req.body.username)) {
+            // create user on db
+            db.usernames.push({"name" : req.body.username});
+
+            fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
+              if (error) {
+                console.log(error);
+                return;
+              }
+              console.log("Add user to database success");
+            });
+          }
+          else {
+            // don't create the username
+            console.log("Username already exists, No changes made");
+          }
           
           res.sendStatus(201);    // created
       })
