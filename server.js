@@ -94,23 +94,35 @@ app.listen(8080, () => {
       .delete((req, res) => {
           // handle delete
           console.log(`Deleting: ${req.body.username} on server`);
+          var found = false;
+
           // delete user on db
           for (var i = db.usernames.length  - 1; i>= 0; --i)
           {
             if (db.usernames[i].name == req.body.username)
             {
               db.usernames.splice(i, 1);
-              //return; <-- to not delete all instances of name, fix soon!
+              found = true;
+              break;
             }
           }
-          fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
-            if (error) {
-              console.log(error);
-              return;
-            }
-            console.log("Delete user to database success");
-          });
-          res.sendStatus(200);    // OK
+
+          if(found == true)
+          {
+            fs.writeFile("./db.json", JSON.stringify(db, null, 2), (error) => {
+              if (error) {
+                console.log(error);
+                return;
+              }
+              console.log("Delete user to database success");
+            });
+            res.sendStatus(200);    // OK
+          }
+          else
+          {
+            console.log("Username does not exist, No changes made");
+            res.sendStatus(204);
+          }
       })
 
       app.get('/get-db', (req, res) => {

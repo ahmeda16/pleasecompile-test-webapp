@@ -103,11 +103,18 @@ buttonDelete.addEventListener('click', function(e) {
     fetch('/username', requestOptions)
     .then(function(response) {
         if (response.ok) {
-            
             console.log("'delete' was recorded");
-            output.value = `'${username.value}' was deleted.`
-            updateDB()
-            return;
+            if(response.status == 200)
+            {
+                output.value = `'${username.value}' was deleted.`
+                updateDB()
+                return;
+            }
+            else if(response.status == 204)
+            {
+                output.value = `'${username.value}' does not exist. No user deleted.`
+                return; 
+            }
 
         }
         throw new Error('Delete request failed');
