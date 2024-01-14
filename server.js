@@ -82,9 +82,11 @@ app.listen(8080, () => {
           }
 
           if (found) {
+            console.log("Username found");
             res.sendStatus(200);    // OK, found
           }
           else {
+            console.log("Username NOT found");
             res.sendStatus(204);    // OK but not found
           }
       }) 
